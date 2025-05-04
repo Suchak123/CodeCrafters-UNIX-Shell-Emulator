@@ -18,8 +18,6 @@ function startREPL(){
     }
 
     const [command, ...args] = answer.trim().split(/\s+/);
-    console.log(command);
-    console.log(args);
 
     if(command === "echo"){
       console.log(args.join(" "));
