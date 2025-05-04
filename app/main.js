@@ -1,3 +1,4 @@
+const { exit } = require("process");
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -6,7 +7,21 @@ const rl = readline.createInterface({
 });
 
 // Uncomment this block to pass the first stage
-rl.question("$ ", (answer) => {
-  console.log(`${answer}: command not found`);
-  rl.close();
-});
+
+function startREPL(){
+
+  rl.question("$ ", (answer) => {
+    if(answer == "exit"){
+      rl.close();
+      return;
+    }
+
+    console.log(`${answer}: command not found`);
+    startREPL();
+    
+  });
+
+}
+
+startREPL();
+
