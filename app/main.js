@@ -16,7 +16,13 @@ function startREPL(){
       return;
     }
 
-    console.log(`${answer}: command not found`);
+    if(answer.startsWith("echo")){
+      const output = answer.split(" ").slice(1).join(" ");
+      console.log(output);
+    } else{
+      console.log(`${answer}: command not found`);
+    }
+
     startREPL();
     
   });
