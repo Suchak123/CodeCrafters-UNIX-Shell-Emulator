@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 function startREPL(){
 
   rl.question("$ ", (answer) => {
-    if(answer == "exit"){
+    if(answer == "exit 0"){
       rl.close();
       return;
     }
