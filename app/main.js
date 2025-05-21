@@ -17,7 +17,6 @@ function findInPath(command) {
   for (const dir of PATHS) {
     const fullPath = path.join(dir, command);
     if(fs.existsSync(fullPath)) {
-      console.log(fullPath);
       return fullPath;
     }
   }
