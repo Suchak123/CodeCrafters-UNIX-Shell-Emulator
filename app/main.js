@@ -56,7 +56,10 @@ function startREPL(){
       }
       startREPL();
     }
-
+    else if(command === "pwd") {
+      console.log(process.cwd());
+      startREPL();
+    }
     else {
       const executablePath = findInPath(command);
       if(executablePath) {
