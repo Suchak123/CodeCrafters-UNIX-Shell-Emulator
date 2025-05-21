@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 });
 
 // Uncomment this block to pass the first stage
-const shellBuiltins = ["echo", "exit", "type"];
+const shellBuiltins = ["echo", "exit", "type", "pwd"];
 const PATHS = process.env.PATH.split(":");
 
 function findInPath(command) {
