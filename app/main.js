@@ -60,7 +60,9 @@ function startREPL(){
     else {
       const executablePath = findInPath(command);
       if(executablePath) {
-        const child = spawn(executablePath, args, {stdio: "inherit"});
+        const child = spawn(executablePath, args, {stdio: "inherit",
+          argv0: command,
+        });
 
         child.on("exit", () => {
           startREPL();
