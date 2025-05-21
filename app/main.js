@@ -2,6 +2,7 @@ const { exit } = require("process");
 const readline = require("readline");
 const fs = require("fs");
 const path = require("path");
+const { spawn } = require("child_process");
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -16,6 +17,7 @@ function findInPath(command) {
   for (const dir of PATHS) {
     const fullPath = path.join(dir, command);
     if(fs.existsSync(fullPath)) {
+      console.log(fullPath);
       return fullPath;
     }
   }
@@ -34,6 +36,7 @@ function startREPL(){
 
     if(command === "echo"){
       console.log(args.join(" "));
+      startREPL();
     }
     else if(command === "type"){
       if(args.length === 0) {
@@ -44,7 +47,6 @@ function startREPL(){
             console.log(`${arg} is a shell builtin`);
           } else{
             const foundPAth = findInPath(arg);
-
             if(foundPAth) {
               console.log(`${arg} is ${foundPAth}`);
             } else {
@@ -53,13 +55,24 @@ function startREPL(){
           }
         });
       }
+      startREPL();
     }
 
     else {
-      console.log(`${command}: command not found`);
+      const executablePath = findInPath(command);
+      if(executablePath) {
+        const child = spawn(executablePath, args, {stdio: "inherit"});
+
+        child.on("exit", () => {
+          startREPL();
+        })
+      } else {
+          console.log(`${command}: command not found`);
+          startREPL();
+
+      }
     }
 
-    startREPL();
     
   });
 }
