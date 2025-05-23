@@ -71,7 +71,11 @@ function startREPL(){
         try {
           process.chdir(targetDir);
         } catch (error) {
-          console.error(`cd: ${error.message}`);
+          if(error.code === 'ENOENT'){
+            console.log(`cd: ${targetDir}: No such file or directory`);
+          } else{
+              console.log(`cd: ${targetDir}: ${error.message}`);
+          }
         }
       }
       startREPL();
