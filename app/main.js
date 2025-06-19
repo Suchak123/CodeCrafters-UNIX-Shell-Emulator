@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 });
 
 // Uncomment this block to pass the first stage
-const shellBuiltins = ["echo", "exit", "type", "pwd", "cd"];
+const shellBuiltins = ["echo", "exit", "type", "pwd", "cd", "ls"];
 const PATHS = process.env.PATH.split(":");
 
 function findInPath(command) {
@@ -65,11 +65,10 @@ function startREPL(){
 
       if(!targetDir) {
         console.log("cd: missing operand");
-      } else if(!targetDir.startsWith("/")){
-        console.log("cd: only absolute paths are supported in this stage");
       } else{
+        const resolvedPath = path.resolve(process.cwd(), targetDir);
         try {
-          process.chdir(targetDir);
+          process.chdir(resolvedPath);
         } catch (error) {
           if(error.code === 'ENOENT'){
             console.log(`cd: ${targetDir}: No such file or directory`);
@@ -93,11 +92,8 @@ function startREPL(){
       } else {
           console.log(`${command}: command not found`);
           startREPL();
-
       }
     }
-
-    
   });
 }
 
